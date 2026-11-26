@@ -462,37 +462,6 @@ function frame(time) {
 requestAnimationFrame(frame);
 
 /* ================= SECCIONES DE FLUJO ================= */
-/* Instalación: el montaje avanza y retrocede con el scroll.
-   Con assets/video/montaje.mp4 mueve el vídeo fotograma a fotograma; sin vídeo, funde las dos imágenes. */
-const asm = document.getElementById('instalacion');
-if (asm) {
-  const vid = asm.querySelector('.a-video'), imS = asm.querySelector('.a-start'), imE = asm.querySelector('.a-end');
-  const steps = [...asm.querySelectorAll('.steps li')], bar = asm.querySelector('.assembly__bar span');
-  let hasVideo = false, vt = 0;
-  fetch('assets/video/montaje.mp4', { method: 'HEAD' }).then((r) => {
-    if (!r.ok) return;
-    vid.addEventListener('loadeddata', () => { hasVideo = true; asm.classList.add('has-video'); }, { once: true });
-    vid.src = 'assets/video/montaje.mp4'; vid.load();
-  }).catch(() => {});
-  (function loop() {
-    requestAnimationFrame(loop);
-    const r = asm.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
-    const k = clamp(-r.top / (r.height - innerHeight), 0, 1), a = clamp((k - 0.06) / 0.82, 0, 1);
-    if (hasVideo && vid.duration) {
-      vt += (a * (vid.duration - 0.05) - vt) * (reduced ? 1 : 0.2);
-      if (!vid.seeking && Math.abs(vid.currentTime - vt) > 0.008) vid.currentTime = vt;
-    } else {
-      const f = sm(clamp((a - 0.35) / 0.4, 0, 1));
-      imS.style.opacity = 1 - f; imE.style.opacity = f;
-      imS.style.transform = `scale(${1 + 0.04 * (1 - a)})`; imE.style.transform = `scale(${1.02 - 0.02 * f})`;
-    }
-    const si = Math.min(steps.length - 1, Math.floor(a * steps.length * 0.999));
-    steps.forEach((el, i) => { el.classList.toggle('on', i <= si); el.classList.toggle('now', i === si); });
-    bar.style.transform = `scaleX(${a})`;
-  })();
-}
-
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
 document.querySelectorAll('.reveal, .clip').forEach((el) => io.observe(el));
 const count = document.getElementById('count');
