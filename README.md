@@ -6,8 +6,12 @@ Concepto de rediseño de la web de Royo (muebles de baño, Valencia): experienci
 
 Concept by Alejandro Romero.
 
+**Repositorio:** https://github.com/aromerorausell-sys/royo-concept
+
 ## Verla en local
 ```bash
+git clone https://github.com/aromerorausell-sys/royo-concept.git
+cd royo-concept
 python3 -m http.server 8080
 ```
 y abre http://localhost:8080
