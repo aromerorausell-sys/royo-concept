@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Royo · Catálogo (concepto)</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23F5F2EE' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/site.css?v=20261128b" />
+</head>
+<body class="page">
+  <div class="grain" aria-hidden="true"></div>
+  <header class="header">
+    <a href="index.html" class="logo" aria-label="Royo, inicio">Royo<sup>®</sup></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="index.html#colecciones">Colecciones</a>
+      <a href="index.html#instalacion">Instalación</a>
+      <a href="index.html#para-ti">Profesionales</a>
+      <a href="index.html#para-ti">Configuradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header__right"><a href="catalogo.html#buscar" class="hsearch" aria-label="Buscar en el catálogo de Royo" title="Buscar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" /></svg></a><span>ES / EN</span><a href="contacto.html#distribuidor" class="pill">Dónde comprar</a></div>
+  </header>
+
+  <main>
+    <section class="ct-hero cg-hero">
+      <p class="eyebrow reveal"><a href="index.html">Royo</a> / Catálogo</p>
+      <h1 class="ct-title reveal">Todo<br /><em>el catálogo.</em></h1>
+      <p class="ct-lead reveal">Busca por nombre o filtra por tipo de producto: muebles, espejos, luces, lavabos y complementos.</p>
+    </section>
+
+    <section class="section cg" id="buscar">
+      <div class="cg-bar">
+        <label class="cg-search">
+          <span class="sr">Buscar en el catálogo</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" /></svg>
+          <input id="cgq" type="search" placeholder="Buscar: Logika, espejo, patas…" autocomplete="off" />
+        </label>
+        <div class="cg-types" role="group" aria-label="Tipo de producto" id="cgTypes"></div>
+      </div>
+      <p class="cg-count" id="cgCount" role="status" aria-live="polite"></p>
+      <div class="cg-groups" id="cgList"></div>
+      <p class="cg-empty" id="cgEmpty" hidden>No hay nada con ese nombre. Prueba con otra palabra o <a href="contacto.html">escríbenos</a>.</p>
+      <p class="cg-note">Las colecciones marcadas con <span class="cg-own">3D</span> tienen ficha propia en este concepto. El resto abre su página en royogroup.com.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__big">ROYO <em>50 años</em></p>
+      <div class="footer__cols">
+        <div><p class="footer__h">Royo</p><a href="index.html">Inicio</a><a href="index.html#colecciones">Colecciones</a><a href="catalogo.html">Catálogo</a><a href="index.html#para-ti">Configuradores</a><a href="contacto.html">Contacto</a></div>
+        <div><p class="footer__h">Síguenos</p><a href="https://www.facebook.com/royogroup" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/royo_bathroom/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/company/royogroup/" target="_blank" rel="noopener">LinkedIn</a></div>
+        <div><p class="footer__h">Legal</p><a href="https://www.royogroup.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.royogroup.com/politica-de-privacidad/" target="_blank" rel="noopener">Privacidad</a><a href="https://www.royogroup.com/politica-de-cookies/" target="_blank" rel="noopener">Cookies</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom"><span>Royo 50 años · Concepto de rediseño, no es la web oficial</span><span>Concept by Alejandro Romero</span></div>
+  </footer>
+
+  <script src="js/i18n.js?v=20261128a"></script>
+  <script src="js/catalogo.js?v=20261128a"></script>
+  <script>
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
