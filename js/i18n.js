@@ -77,6 +77,9 @@
     'Logika en Nogal Ártico': 'Logika in Nogal Ártico', 'Logika en roble': 'Logika in oak', 'Alfa en Arena': 'Alfa in Arena', 'Econic en Terracota': 'Econic in Terracota',
     'Econic en Verde Forest': 'Econic in Verde Forest', 'Econic en Azul Vapor': 'Econic in Azul Vapor', 'Alfa en Azul Ocean': 'Alfa in Azul Ocean',
     'Baño a medida en roble': 'Made-to-measure bathroom in oak', 'Composición en gris': 'Composition in grey', 'Detalle de lavabo': 'Basin detail',
+    'Mapa de distribuidores Royo': 'Map of Royo distributors', 'Ver las oficinas centrales en Valencia': 'See the head office in Valencia',
+    'En la web real, aquí aparecerían los distribuidores Royo de tu zona. Mientras tanto, llama al': 'On the real website, the Royo distributors in your area would appear here. In the meantime, call',
+    'Royo · Oficinas centrales': 'Royo · Head office',
     // configuradores
     'Diséñalo tú.': 'You design it.', 'Nosotros lo fabricamos.': 'We make it.', 'Diseña tu baño con': 'Design your bathroom with',
     'Logika, Econic, Wave, Vida, Alfa y Essence. Elige módulos, medidas y acabados.': 'Logika, Econic, Wave, Vida, Alfa and Essence. Choose modules, sizes and finishes.',
