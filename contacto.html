@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Royo · Contacto (concepto)</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23F5F2EE' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body class="page">
+  <div class="grain" aria-hidden="true"></div>
+  <header class="header">
+    <a href="index.html" class="logo" aria-label="Royo, inicio">ROYO</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="index.html#colecciones">Colecciones</a>
+      <a href="index.html#profesionales">Profesionales</a>
+      <a href="index.html#instalacion">Instalación</a>
+      <a href="index.html#configuradores">Configuradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header__right"><span>ES / EN</span><a href="#distribuidor" class="pill">Dónde comprar</a></div>
+  </header>
+
+  <main>
+    <section class="ct-hero">
+      <p class="eyebrow reveal">Royo / Contacto</p>
+      <h1 class="ct-title reveal">Hablemos<br /><em>de tu baño.</em></h1>
+      <p class="ct-lead reveal">Queremos estar siempre cerca del cliente. Escríbenos, llámanos o ven a vernos a nuestras oficinas centrales en Valencia.</p>
+    </section>
+
+    <section class="section ct-grid">
+      <form class="ct-form reveal" novalidate>
+        <p class="eyebrow">Escríbenos</p>
+        <div class="ct-type" role="radiogroup" aria-label="Soy">
+          <label><input type="radio" name="tipo" value="particular" checked /> <span>Particular</span></label>
+          <label><input type="radio" name="tipo" value="profesional" /> <span>Profesional</span></label>
+          <label><input type="radio" name="tipo" value="distribuidor" /> <span>Quiero distribuir</span></label>
+        </div>
+        <div class="ct-row">
+          <div class="field"><input id="n" name="nombre" placeholder=" " required autocomplete="name" /><label for="n">Nombre</label></div>
+          <div class="field"><input id="t" name="tel" placeholder=" " autocomplete="tel" inputmode="tel" /><label for="t">Teléfono</label></div>
+        </div>
+        <div class="field"><input id="e" name="email" type="email" placeholder=" " required autocomplete="email" /><label for="e">Correo electrónico</label></div>
+        <div class="field"><input id="cp" name="cp" placeholder=" " inputmode="numeric" autocomplete="postal-code" /><label for="cp">Código postal</label></div>
+        <div class="field field--area"><textarea id="m" name="mensaje" placeholder=" " rows="3" required></textarea><label for="m">¿En qué podemos ayudarte?</label></div>
+        <label class="check"><input type="checkbox" name="privacy" required /> <span>He leído y acepto la <a href="#">política de privacidad</a>.</span></label>
+        <button type="submit" class="ct-send">Enviar mensaje →</button>
+        <p class="news__msg" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="ct-info">
+        <div class="reveal"><p class="eyebrow">Oficinas centrales</p><p class="ct-big">C/ Río Vinalopó, 69<br />46930 Quart de Poblet<br />Valencia · España</p></div>
+        <div class="reveal"><p class="eyebrow">Teléfono</p><p class="ct-big"><a href="tel:+34961597660">+34 961 597 660</a></p><p class="ct-small">L–J 08:00–14:00 y 15:00–17:00 · V 08:00–14:30</p></div>
+        <div class="reveal"><p class="eyebrow">Email</p><p class="ct-big"><a href="mailto:info@royogroup.com">info@royogroup.com</a></p><p class="ct-small">Trabaja con nosotros: <a href="mailto:seleccion@royogroup.com">seleccion@royogroup.com</a></p></div>
+        <div class="reveal"><p class="eyebrow">Outlet</p><p class="ct-small">Misma dirección · <a href="tel:+34607644926">+34 607 644 926</a><br />L–V 10:00–14:00 y 15:00–19:00</p></div>
+      </aside>
+    </section>
+
+    <section class="ct-map" id="distribuidor">
+      <iframe title="Mapa de Royo en Quart de Poblet" loading="lazy" referrerpolicy="no-referrer"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-0.5300%2C39.4560%2C-0.4740%2C39.4800&amp;layer=mapnik&amp;marker=39.46795%2C-0.50210"></iframe>
+      <div class="ct-locator reveal">
+        <p class="eyebrow">Dónde comprar</p>
+        <h2 class="ct-loc-title">Encuentra tu<br /><em>distribuidor Royo.</em></h2>
+        <form class="ct-search" novalidate>
+          <div class="field"><input id="q" placeholder=" " inputmode="numeric" autocomplete="postal-code" /><label for="q">Tu código postal</label><button type="submit" class="news__submit">Buscar →</button></div>
+        </form>
+        <p class="ct-result" id="res" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__big">ROYO <em>50 años</em></p>
+      <div class="footer__cols">
+        <div><p class="footer__h">Royo</p><a href="index.html">Inicio</a><a href="index.html#colecciones">Colecciones</a><a href="index.html#configuradores">Configuradores</a><a href="contacto.html">Contacto</a></div>
+        <div><p class="footer__h">Síguenos</p><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div><p class="footer__h">Legal</p><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom"><span>Royo 50 años · Concepto de rediseño, no es la web oficial</span><span>Concept by Alejandro Romero</span></div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script>
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    const f = document.querySelector('.ct-form'), msg = f.querySelector('.news__msg');
+    f.addEventListener('submit', (e) => {
+      e.preventDefault(); msg.classList.remove('err');
+      if (!f.nombre.value.trim()) { msg.textContent = 'Dinos tu nombre.'; msg.classList.add('err'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) { msg.textContent = 'Revisa tu correo electrónico.'; msg.classList.add('err'); return; }
+      if (!f.mensaje.value.trim()) { msg.textContent = 'Cuéntanos en qué podemos ayudarte.'; msg.classList.add('err'); return; }
+      if (!f.privacy.checked) { msg.textContent = 'Necesitamos que aceptes la política de privacidad.'; msg.classList.add('err'); return; }
+      msg.textContent = 'Gracias, ' + f.nombre.value.trim().split(' ')[0] + '. Te responderemos pronto (demo: no se envía nada).'; f.reset();
+    });
+    document.querySelector('.ct-search').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cp = document.getElementById('q').value.trim(), res = document.getElementById('res');
+      res.innerHTML = /^\d{5}$/.test(cp)
+        ? `En la web real, aquí aparecerían los distribuidores Royo más cercanos a <b>${cp}</b> en el mapa. Mientras tanto, llama al <a href="tel:+34961597660">+34 961 597 660</a> y te diremos cuál te queda más cerca.`
+        : 'Escribe un código postal de 5 cifras.';
+    });
+  </script>
+</body>
+</html>

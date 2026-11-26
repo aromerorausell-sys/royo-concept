@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Royo · Colección (concepto)</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23F5F2EE' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body class="page">
+  <div class="grain" aria-hidden="true"></div>
+  <header class="header">
+    <a href="index.html" class="logo" aria-label="Royo, inicio">ROYO</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="index.html#colecciones">Colecciones</a>
+      <a href="index.html#profesionales">Profesionales</a>
+      <a href="index.html#instalacion">Instalación</a>
+      <a href="index.html#configuradores">Configuradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header__right"><span>ES / EN</span><a href="contacto.html#distribuidor" class="pill">Dónde comprar</a></div>
+  </header>
+
+  <main>
+    <section class="ch">
+      <div class="ch__text">
+        <p class="eyebrow reveal"><a href="index.html#colecciones">Colecciones</a> / <span id="cLine"></span></p>
+        <h1 class="ch__name reveal" id="cName"></h1>
+        <p class="ch__tag reveal" id="cTag"></p>
+        <div class="ch__meta reveal" id="cMeta"></div>
+      </div>
+      <div class="ch__media clip"><img id="cHero" alt="" /></div>
+    </section>
+
+    <section class="section viewer-sec" id="viewerSec">
+      <div class="viewer-head">
+        <div><p class="eyebrow reveal">En 3D</p><h2 class="section-title reveal">Gíralo, ábrelo,<br /><em>elige su acabado.</em></h2></div>
+        <p class="viewer-hint reveal">Arrastra para girar · rueda para acercar</p>
+      </div>
+      <div class="viewer reveal" id="viewer">
+        <canvas id="vc" aria-label="Mueble en 3D"></canvas>
+        <div class="viewer__ui">
+          <div><p class="eyebrow">Acabado</p><p class="viewer__fin" id="vFin"></p><div class="viewer__dots" id="vDots"></div></div>
+          <button class="viewer__btn" id="vOpen" aria-pressed="false">Abrir cajones</button>
+        </div>
+        <p class="viewer__src" id="vSrc"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow reveal">Características</p>
+      <ol class="feats" id="cFeats"></ol>
+    </section>
+
+    <section class="section gallery-sec">
+      <p class="eyebrow reveal">Galería</p>
+      <div class="gallery" id="cGallery"></div>
+    </section>
+
+    <section class="section specs-sec">
+      <div class="specs-grid">
+        <div><p class="eyebrow reveal">Ficha técnica</p><h2 class="section-title reveal">Medidas<br /><em>y materiales.</em></h2></div>
+        <div><table class="specs reveal" id="cSpecs"></table></div>
+      </div>
+      <div class="docs reveal" id="cDocs"></div>
+    </section>
+
+    <section class="section others">
+      <p class="eyebrow reveal">Otras colecciones</p>
+      <div class="others__list" id="cOthers"></div>
+    </section>
+
+    <section class="section cta">
+      <h2 class="section-title reveal">¿Lo quieres<br /><em>en tu baño?</em></h2>
+      <div class="cta__links reveal">
+        <a href="https://www.royogroup.com/en/virtual-configurator/" class="btn-line" target="_blank" rel="noopener">Configurarlo</a>
+        <a href="contacto.html#distribuidor" class="btn-line">Encontrar distribuidor</a>
+        <a href="contacto.html" class="btn-line">Pedir información</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" hidden><button class="lightbox__close" aria-label="Cerrar">×</button><img alt="" /></div>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__big">ROYO <em>50 años</em></p>
+      <div class="footer__cols">
+        <div><p class="footer__h">Royo</p><a href="index.html">Inicio</a><a href="index.html#colecciones">Colecciones</a><a href="index.html#configuradores">Configuradores</a><a href="contacto.html">Contacto</a></div>
+        <div><p class="footer__h">Síguenos</p><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div><p class="footer__h">Legal</p><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom"><span>Royo 50 años · Concepto de rediseño, no es la web oficial</span><span>Concept by Alejandro Romero</span></div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <script type="module" src="coleccion.js"></script>
+</body>
+</html>

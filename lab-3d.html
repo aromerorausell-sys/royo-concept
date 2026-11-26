@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Royo · Laboratorio 3D (concepto)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#F5F2EE; --ink:#141414; --sand:#B9A68C; --sand-deep:#8A7861; --pad:clamp(1.25rem,4vw,4rem); --ease:cubic-bezier(.215,.61,.355,1); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{background:var(--bg);transition:background-color 1.2s var(--ease)}
+    body{color:var(--ink);font-family:Inter,system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    html.lenis, html.lenis body{height:auto}
+    canvas#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:1}
+    .track{position:relative;z-index:2;height:1100vh;pointer-events:none}
+    .grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:9;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:g .8s steps(4) infinite}
+    @keyframes g{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-1%,3%)}100%{transform:translate(3%,-1%)}}
+
+    header{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:1.6rem var(--pad);mix-blend-mode:difference;color:#F5F2EE}
+    .logo{font-family:Fraunces,serif;font-size:1.5rem;letter-spacing:.32em}
+    .models{display:flex;gap:1.6rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+    .models a{color:inherit;text-decoration:none;opacity:.5;padding-bottom:.25rem;border-bottom:1px solid transparent;transition:opacity .4s}
+    .models a.on,.models a:hover{opacity:1;border-color:currentColor}
+    .hud{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+
+    /* textos sobre el lienzo */
+    .scene-text{position:fixed;z-index:4;pointer-events:none;opacity:0;will-change:opacity,transform}
+    .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sand-deep)}
+    .big{font-family:Fraunces,serif;font-weight:300;letter-spacing:-.03em;line-height:.95}
+    .big em{font-style:italic;color:var(--sand-deep)}
+    .t-hero{left:var(--pad);right:var(--pad);top:14vh;text-align:center}
+    .t-hero .big{font-size:clamp(3rem,8.4vw,9.4rem)}
+    .t-hero .eyebrow{margin-bottom:1.4rem}
+    .t-hint{left:50%;bottom:4vh;transform:translateX(-50%);font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-deep)}
+    .t-left{left:var(--pad);top:50%;transform:translateY(-50%);max-width:26rem}
+    .t-right{right:var(--pad);top:50%;transform:translateY(-50%);max-width:24rem;text-align:right}
+    .t-left .big,.t-right .big{font-size:clamp(2.4rem,4.6vw,4.8rem)}
+    .t-left p,.t-right p{margin-top:1.2rem;font-size:1rem;line-height:1.6;color:#4b4741}
+    .t-giant{left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;z-index:0}
+    .t-giant .big{font-size:clamp(5rem,19vw,22rem);color:transparent;-webkit-text-stroke:1px rgba(20,20,20,.18)}
+    .t-finish{left:var(--pad);bottom:8vh}
+    .t-finish .name{font-family:Fraunces,serif;font-size:clamp(2.2rem,4vw,4rem);font-weight:300;letter-spacing:-.02em;margin-top:.6rem}
+    .t-finish .dots{display:flex;gap:.7rem;margin-top:1.2rem}
+    .t-finish .dots span{width:22px;height:22px;border-radius:50%;border:1px solid rgba(20,20,20,.25);transition:transform .6s var(--ease)}
+    .t-finish .dots span.on{transform:scale(1.35);border-color:var(--ink)}
+    .t-end{left:var(--pad);right:var(--pad);bottom:10vh;text-align:center}
+    .t-end .big{font-size:clamp(4rem,14vw,15rem);letter-spacing:.06em}
+
+    /* etiquetas técnicas del despiece */
+    .label{position:fixed;left:0;top:0;z-index:4;pointer-events:none;opacity:0;font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+    .label .in{position:absolute;left:14px;top:0;transform:translateY(-50%)}
+    .label::before{content:"";position:absolute;left:-4px;top:-4px;width:7px;height:7px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(185,166,140,.35)}
+    .label.flip .in{left:auto;right:14px;text-align:right}
+    .label b{display:block;font-weight:400;color:var(--sand-deep);font-size:.62rem;margin-bottom:.2rem}
+
+    /* barra de progreso fina */
+    .progress{position:fixed;right:var(--pad);top:50%;transform:translateY(-50%);z-index:5;width:1px;height:28vh;background:rgba(20,20,20,.15)}
+    .progress span{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--ink);transform-origin:top;transform:scaleY(0)}
+
+    /* carga */
+    .loader{position:fixed;inset:0;z-index:20;background:var(--bg);display:grid;place-items:center;transition:opacity 1.2s var(--ease),visibility 1.2s}
+    .loader.done{opacity:0;visibility:hidden}
+    .loader .box{text-align:center}
+    .loader .logo{color:var(--ink);font-size:2rem}
+    .loader .pct{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.2em;margin-top:1.2rem;color:var(--sand-deep)}
+    .loader .bar{width:180px;height:1px;background:rgba(20,20,20,.15);margin:1rem auto 0;position:relative;overflow:hidden}
+    .loader .bar i{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0);transition:transform .4s var(--ease)}
+
+    .note{position:fixed;left:var(--pad);bottom:1.4rem;z-index:5;font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sand-deep);opacity:.8}
+
+    @media (max-width:800px){
+      .t-left,.t-right{left:var(--pad);right:var(--pad);top:auto;bottom:10vh;transform:none;text-align:left;max-width:none}
+      .t-hero{top:12vh}
+      .progress{display:none}
+    }
+    @media (prefers-reduced-motion:reduce){ .grain{animation:none} }
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader"><div class="box"><div class="logo">ROYO</div><div class="bar"><i id="loadbar"></i></div><div class="pct" id="loadpct">Cargando modelo · 0%</div></div></div>
+  <canvas id="gl"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header><span class="logo">ROYO</span><nav class="models"><a href="?modelo=logika" data-m="logika">Logika</a><a href="?modelo=econic" data-m="econic">Econic</a></nav><span class="hud" id="hud">Logika 100 · 2 cajones</span></header>
+
+  <!-- Planos: cada bloque aparece en su tramo de scroll (data-in / data-out en 0..1) -->
+  <div class="scene-text t-hero" data-in="-1" data-out="0.10">
+    <p class="eyebrow" data-scramble>Royo · Logika · desde Valencia</p>
+    <h1 class="big">Diseñamos tu baño<br /><em>desde hace más de 50 años</em></h1>
+  </div>
+  <div class="scene-text t-hint" data-in="-1" data-out="0.05">Haz scroll</div>
+
+  <div class="scene-text t-left" data-in="0.12" data-out="0.27">
+    <p class="eyebrow" data-scramble>01 · Suspendido</p>
+    <h2 class="big">Líneas rectas,<br /><em>suelo libre.</em></h2>
+    <p>Mueble suspendido de 45 cm de fondo. Laterales de 16 mm y frentes de 18 mm.</p>
+  </div>
+
+  <div class="scene-text t-giant" data-in="0.28" data-out="0.52"><div class="big">Logika</div></div>
+  <div class="scene-text t-right" data-in="0.30" data-out="0.50">
+    <p class="eyebrow" data-scramble>02 · Despiece</p>
+    <h2 class="big">Cada pieza,<br /><em>pensada.</em></h2>
+  </div>
+
+  <div class="label" data-anchor="top"><div class="in"><b data-scramble>Encimera</b>Lavabo integrado de cerámica</div></div>
+  <div class="label" data-anchor="d1"><div class="in"><b data-scramble>Cajón superior</b>Extracción total · Hettich</div></div>
+  <div class="label" data-anchor="handle"><div class="in"><b data-scramble>Tirador</b>Integrado · acabado inox</div></div>
+  <div class="label" data-anchor="d2"><div class="in"><b data-scramble>Cajón inferior</b>Cierre amortiguado</div></div>
+  <div class="label" data-anchor="side"><div class="in"><b data-scramble>Lateral</b>Aglomerado TSCA 16 mm</div></div>
+
+  <div class="scene-text t-left" data-in="0.56" data-out="0.72">
+    <p class="eyebrow" data-scramble>03 · Por dentro</p>
+    <h2 class="big">Cajón metálico<br /><em>de alta gama.</em></h2>
+    <p>Interior antracita, regulable en altura y en lateral. Se abre hasta el fondo.</p>
+  </div>
+
+  <div class="scene-text t-finish" data-in="0.75" data-out="0.93">
+    <p class="eyebrow" data-scramble>04 · Tu acabado</p>
+    <div class="name" id="finishName">Nogal Ártico</div>
+    <div class="dots" id="finishDots"></div>
+  </div>
+
+  <div class="scene-text t-end" data-in="0.94" data-out="2"><div class="big">ROYO</div><p class="eyebrow" style="margin-top:1rem">50 años · Concept by Alejandro Romero</p></div>
+
+  <div class="progress"><span id="prog"></span></div>
+  <p class="note">Laboratorio 3D · modelo real Logika (configurador Royo) · concepto, no web oficial</p>
+
+  <div class="track" aria-hidden="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <script type="module" src="lab-3d.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Royo — Diseñamos tu baño desde hace más de 50 años (concepto)</title>
+  <meta name="description" content="Concepto de rediseño de la web de Royo, muebles de baño desde Valencia. Experiencia 3D interactiva. No es la web oficial." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23F5F2EE' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/3d/LOGIKA_2C_100.glb" as="fetch" crossorigin />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <!-- carga: el plano del mueble se va llenando de luz -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__box">
+      <svg viewBox="0 0 300 190">
+        <defs><clipPath id="lc"><rect id="lightRect" x="0" y="190" width="300" height="190" /></clipPath></defs>
+        <g clip-path="url(#lc)"><rect class="lt" x="20" y="22" width="260" height="10" /><rect class="lt" x="24" y="36" width="252" height="66" /><rect class="lt" x="24" y="106" width="252" height="66" /></g>
+        <rect class="ol" x="20" y="22" width="260" height="10" /><rect class="ol" x="24" y="36" width="252" height="66" /><rect class="ol" x="24" y="106" width="252" height="66" />
+        <line class="ol" x1="128" y1="46" x2="172" y2="46" /><line class="ol" x1="128" y1="116" x2="172" y2="116" /><rect class="ol" x="146" y="2" width="8" height="20" />
+      </svg>
+      <p id="loadTxt">Royo · 0%</p>
+    </div>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="header">
+    <a href="#top" class="logo" data-p="0" aria-label="Royo, inicio">ROYO</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#" data-p="0.10">Somos Royo</a>
+      <a href="#colecciones">Colecciones</a>
+      <a href="#instalacion">Instalación</a>
+      <a href="#configuradores">Configuradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header__right"><span>ES / EN</span><a href="#" class="pill">Área privada</a></div>
+  </header>
+  <div class="rail" aria-hidden="true"><span id="rail"></span></div>
+
+  <!-- ============ HISTORIA (planos fijos atados al scroll) ============ -->
+  <!-- 0 · Portada: titular DETRÁS del mueble (el lienzo es transparente) -->
+  <div class="st st--behind hero-title" data-in="-1" data-out="0.075">
+    <h1 class="serif"><span class="line"><span>Diseñamos</span></span><span class="line"><span><em>tu baño</em></span></span></h1>
+  </div>
+  <div class="st hero-coords" data-in="-1" data-out="0.06"><span data-scramble>Logika 100 · 2C</span><br />100 × 56,5 × 45 cm<br />Valencia · ES</div>
+  <div class="st hero-coords right" data-in="-1" data-out="0.06"><span data-scramble>Muebles de baño</span><br />+50 años<br />Diseño y fabricación</div>
+  <div class="st hero-meta" data-in="-1" data-out="0.05">
+    <p>Diseñamos y fabricamos muebles de baño en Valencia desde hace más de 50 años. Para quien reforma su casa y para quien construye proyectos.</p>
+    <span class="scroll">Scroll <b></b></span>
+  </div>
+
+  <!-- 1 · Manifiesto: las palabras se encienden con el scroll -->
+  <div class="st mani" data-in="0.085" data-out="0.19" data-words-from="0.09" data-words-to="0.17">
+    <p class="eyebrow" data-scramble>Somos Royo</p>
+    <p class="serif" style="margin-top:1.4rem" data-words>Innovación, sostenibilidad, mejora continua y trabajo en equipo.</p>
+  </div>
+
+  <!-- 2 · Despiece -->
+  <div class="st st--behind giant" data-in="0.21" data-out="0.355"><div class="serif">Logika</div></div>
+  <div class="st side-r" data-in="0.22" data-out="0.34">
+    <p class="eyebrow" data-scramble>01 · Despiece</p>
+    <h2 class="serif">Cada pieza,<br /><em>pensada.</em></h2>
+    <p>Laterales de 16 mm, frentes de 18 mm y encimera con lavabo integrado.</p>
+  </div>
+  <div class="label" data-anchor="top"><div class="in"><b data-scramble>Encimera</b>Lavabo integrado de cerámica</div></div>
+  <div class="label" data-anchor="d1"><div class="in"><b data-scramble>Cajón superior</b>Extracción total · Hettich</div></div>
+  <div class="label" data-anchor="handle"><div class="in"><b data-scramble>Tirador</b>Integrado · acabado inox</div></div>
+  <div class="label" data-anchor="d2"><div class="in"><b data-scramble>Cajón inferior</b>Cierre amortiguado</div></div>
+  <div class="label" data-anchor="side"><div class="in"><b data-scramble>Lateral</b>Aglomerado TSCA 16 mm</div></div>
+
+  <!-- 3 · Por dentro -->
+  <div class="st side-l" data-in="0.365" data-out="0.43">
+    <p class="eyebrow" data-scramble>02 · Por dentro</p>
+    <h2 class="serif">Se abre<br /><em>hasta el fondo.</em></h2>
+    <p>Cajón metálico con interior antracita, regulable en altura y en lateral.</p>
+  </div>
+
+  <!-- 4 · Tarjeta con galería de colecciones -->
+  <div class="card" id="card">
+    <div class="card__imgs" id="cardImgs">
+      <img src="assets/royo/logika-nogal.jpg" alt="" data-cap="Soluciones compactas para cada espacio" data-col="01 · Compact" />
+      <img src="assets/royo/econic-terracota.jpg" alt="" data-cap="Combina, adapta, crea" data-col="02 · Modular" />
+      <img src="assets/royo/alfa-arena.jpg" alt="" data-cap="Combina, adapta, crea" data-col="02 · Modular" />
+      <img src="assets/royo/econic-gris.jpg" alt="" data-cap="Combina, adapta, crea" data-col="02 · Modular" />
+      <img src="assets/royo/logika-roble.jpg" alt="" data-cap="Tu baño, a medida" data-col="03 · Tuyo" />
+      <img src="assets/royo/alfa-roble.jpg" alt="" data-cap="Tu baño, a medida" data-col="03 · Tuyo" />
+    </div>
+    <div class="card__frame"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="strip" id="stripL"></div>
+  <div class="strip" id="stripR"></div>
+  <div class="st card__cap" data-in="0.47" data-out="0.555"><p class="eyebrow" id="capCol">Colecciones</p><p class="serif" id="capName">Tres formas de pensar el baño</p></div>
+  <div class="st sweep" data-in="0.44" data-out="0.53" id="sweep"><span class="serif">Compact <em>·</em> Modular <em>·</em> Tuyo <em>·</em> Compact <em>·</em> Modular</span></div>
+  <div class="st expand-title" data-in="0.575" data-out="0.625">
+    <p class="eyebrow" data-scramble>03 · Colecciones</p>
+    <h2 class="serif">Tu baño,<br /><em>a medida.</em></h2>
+  </div>
+
+  <!-- 5 · Macro de material + cambio a oscuro -->
+  <div class="macro" id="macro"><img src="assets/royo/macro-hickory.jpg" alt="" /><i></i></div>
+  <div class="st fillword" data-in="0.635" data-out="0.70" id="fillword"><p class="eyebrow">04 · Materia</p><div class="serif">Calidad</div></div>
+
+  <!-- 6 · Econic: 360º en oscuro -->
+  <div class="st ec-l" data-in="0.715" data-out="0.82" data-words-from="0.72" data-words-to="0.77">
+    <p class="eyebrow" data-scramble>05 · Econic</p>
+    <h2 class="serif" style="margin-top:1rem" data-words>No es solo un mueble.</h2>
+  </div>
+  <div class="st ec-r" data-in="0.74" data-out="0.82" data-words-from="0.75" data-words-to="0.80">
+    <p data-words>Es la colección que creamos para celebrar nuestros 50 años. Curvas de montaña y río, y un tirador tallado en el frente.</p>
+  </div>
+  <div class="st finish" data-in="0.835" data-out="0.915">
+    <p class="eyebrow" data-scramble>06 · Tu acabado</p>
+    <div class="serif" id="finishName">Azul Vapor</div>
+    <div class="dots" id="finishDots"></div>
+    <p class="hint">Toca un color para probarlo</p>
+  </div>
+
+  <!-- 7 · Cierre con reflejo -->
+  <div class="st end-top" data-in="0.935" data-out="1.2"><p class="eyebrow">50 años diseñando en Valencia</p></div>
+  <div class="st st--behind end" data-in="0.94" data-out="1.2"><div class="serif">ROYO</div><div class="serif mirror"><span>ROYO</span></div></div>
+
+  <main id="top">
+    <div class="story" id="story" aria-hidden="true"></div>
+
+    <!-- ============ FLUJO ============ -->
+    <div class="flow">
+      <section class="section" id="colecciones">
+        <p class="eyebrow reveal">Colecciones</p>
+        <h2 class="section-title reveal">Tres formas de<br /><em>pensar el baño.</em></h2>
+        <div class="cols">
+          <article class="col reveal">
+            <div class="col__media clip"><img src="assets/royo/logika-nogal.jpg" alt="Mueble Logika Compact en Nogal Ártico" loading="lazy" /></div>
+            <span class="col__n">01</span>
+            <h3 class="col__title">Compact</h3>
+            <p class="col__lead">Soluciones compactas para cada espacio.</p><p class="col__count">15 colecciones</p>
+            <ul class="col__list"><li><a href="https://www.royogroup.com/en/coleccion/vora/" target="_blank" rel="noopener">Vora</a></li><li><a href="https://www.royogroup.com/en/coleccion/win/" target="_blank" rel="noopener">Win</a></li><li><a href="coleccion.html?c=logika" class="own">Logika</a></li><li><a href="coleccion.html?c=econic" class="own">Econic</a></li><li><a href="https://www.royogroup.com/en/coleccion/dai/" target="_blank" rel="noopener">Dai</a></li><li><a href="https://www.royogroup.com/en/coleccion/urban/" target="_blank" rel="noopener">Urban</a></li><li><a href="https://www.royogroup.com/en/coleccion/wave-compact/" target="_blank" rel="noopener">Wave</a></li><li><a href="https://www.royogroup.com/en/coleccion/vida-compact/" target="_blank" rel="noopener">Vida</a></li><li><a href="coleccion.html?c=alfa" class="own">Alfa</a></li><li><a href="https://www.royogroup.com/en/coleccion/onix/" target="_blank" rel="noopener">Onix</a></li><li><a href="https://www.royogroup.com/en/coleccion/vitale/" target="_blank" rel="noopener">Vitale</a></li><li><a href="https://www.royogroup.com/en/coleccion/bassi/" target="_blank" rel="noopener">Bassi</a></li><li><a href="https://www.royogroup.com/en/coleccion/street/" target="_blank" rel="noopener">Street</a></li><li><a href="https://www.royogroup.com/en/coleccion/enjoy/" target="_blank" rel="noopener">Enjoy</a></li><li><a href="https://www.royogroup.com/en/coleccion/elegance/" target="_blank" rel="noopener">Elegance</a></li></ul>
+            <a href="https://www.royogroup.com/en/collections/compact/" class="btn-line" target="_blank" rel="noopener">Ver Compact</a>
+          </article>
+          <article class="col reveal">
+            <div class="col__media clip"><img src="assets/royo/econic-verde.jpg" alt="Composición Econic Modular en Verde Forest" loading="lazy" /></div>
+            <span class="col__n">02</span>
+            <h3 class="col__title">Modular</h3>
+            <p class="col__lead">Combina, adapta, crea.</p><p class="col__count">6 colecciones</p>
+            <ul class="col__list"><li><a href="coleccion.html?c=logika" class="own">Logika</a></li><li><a href="coleccion.html?c=econic" class="own">Econic</a></li><li><a href="https://www.royogroup.com/en/coleccion/wave-modular/" target="_blank" rel="noopener">Wave</a></li><li><a href="https://www.royogroup.com/en/coleccion/vida-modular/" target="_blank" rel="noopener">Vida</a></li><li><a href="coleccion.html?c=alfa" class="own">Alfa</a></li><li><a href="https://www.royogroup.com/en/coleccion/essence/" target="_blank" rel="noopener">Essence</a></li></ul>
+            <a href="https://www.royogroup.com/en/collections/modular/" class="btn-line" target="_blank" rel="noopener">Ver Modular</a>
+          </article>
+          <article class="col reveal">
+            <div class="col__media clip"><img src="assets/royo/alfa-roble.jpg" alt="Baño a medida con muebles en roble" loading="lazy" /></div>
+            <span class="col__n">03</span>
+            <h3 class="col__title">Tuyo</h3>
+            <p class="col__lead">Tu baño, a medida.</p><p class="col__count">6 acabados</p>
+            <ul class="col__list"><li><a href="https://www.royogroup.com/en/coleccion/tuyo-bezel/" target="_blank" rel="noopener">Bezel</a></li><li><a href="https://www.royogroup.com/en/coleccion/tuyo-classic/" target="_blank" rel="noopener">Classic</a></li><li><a href="https://www.royogroup.com/en/coleccion/tuyo-line/" target="_blank" rel="noopener">Line</a></li><li><a href="https://www.royogroup.com/en/coleccion/tuyo-bold/" target="_blank" rel="noopener">Bold</a></li><li><a href="https://www.royogroup.com/en/coleccion/tuyo-minimal/" target="_blank" rel="noopener">Minimal</a></li><li><a href="https://www.royogroup.com/en/coleccion/tuyo-canaletto/" target="_blank" rel="noopener">Canaletto</a></li></ul>
+            <a href="https://www.royogroup.com/en/collections/tuyo/" class="btn-line" target="_blank" rel="noopener">Ver Tuyo</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="pro" id="profesionales">
+        <div class="pro__media"><img src="assets/royo/alfa-ocean.jpg" alt="Baño con muebles Alfa en Azul Ocean" loading="lazy" data-parallax /></div>
+        <div class="pro__body">
+          <p class="eyebrow reveal">Profesionales y contract</p>
+          <h2 class="section-title reveal">Proyectos que<br /><em>se entregan a tiempo.</em></h2>
+          <p class="pro__text reveal">Hoteles, promociones y reformas. Fabricamos en Valencia, con servicio técnico propio y una red de distribuidores en toda España.</p>
+          <a href="https://www.royogroup.com/en/contract/" class="btn-line reveal" target="_blank" rel="noopener">Royo Contract</a>
+        </div>
+      </section>
+
+      <!-- Instalación: el mueble se monta con el scroll (vídeo de montaje; sin vídeo, fundido entre los dos fotogramas) -->
+      <section class="assembly" id="instalacion">
+        <div class="assembly__stage">
+          <div class="assembly__text">
+            <p class="eyebrow">Instalación</p>
+            <h2 class="section-title">Montarlo es<br /><em>tan fácil como elegirlo.</em></h2>
+            <ol class="steps steps--live">
+              <li><span>01</span><h3>Elige</h3><p>Colección, medida y acabado en el configurador o en tu distribuidor.</p></li>
+              <li><span>02</span><h3>Recibe</h3><p>Cada mueble llega con su esquema de montaje y sus herrajes.</p></li>
+              <li><span>03</span><h3>Instala</h3><p>Vídeos paso a paso y guías regulables en altura y en lateral.</p></li>
+              <li><span>04</span><h3>Disfruta</h3><p>Garantía Royo y servicio técnico desde Valencia.</p></li>
+            </ol>
+          </div>
+          <div class="assembly__media">
+            <img class="a-start" src="assets/video/montaje-inicio.png" alt="Piezas del mueble Logika antes de montarlo" loading="lazy" />
+            <img class="a-end" src="assets/video/montaje-final.png" alt="Mueble Logika montado" loading="lazy" />
+            <video class="a-video" muted playsinline preload="auto" aria-hidden="true"></video>
+            <div class="assembly__bar" aria-hidden="true"><span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="configuradores">
+        <p class="eyebrow reveal">Configuradores</p>
+        <h2 class="section-title reveal">Diséñalo tú.<br /><em>Nosotros lo fabricamos.</em></h2>
+        <div class="config__grid">
+          <article>
+            <div class="config__media clip"><img src="assets/royo/econic-interior.jpg" alt="Interior de cajón Econic con organizador" loading="lazy" /></div>
+            <div class="config__text reveal"><span class="idx">A</span><h3>Diseña tu baño con <em>Royo Modular</em></h3><p>Logika, Econic, Wave, Vida, Alfa y Essence. Elige módulos, medidas y acabados.</p><a href="https://www.royogroup.com/en/virtual-configurator/" class="btn-line" target="_blank" rel="noopener">Abrir configurador</a></div>
+          </article>
+          <article class="config__item--offset">
+            <div class="config__media clip"><img src="assets/royo/econic-lavabo.jpg" alt="Lavabo Oval de la colección Econic" loading="lazy" /></div>
+            <div class="config__text reveal"><span class="idx">B</span><h3>Tu baño a medida con <em>Tuyo</em></h3><p>Bezel, Classic, Line, Bold, Minimal y Canaletto. Cada centímetro, aprovechado.</p><a href="https://www.royogroup.com/configurador-tuyo/?lang=EN" class="btn-line" target="_blank" rel="noopener">Abrir configurador</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section years">
+        <div class="years__count reveal"><span class="years__plus">+</span><span class="years__num" id="count">50</span><span class="years__label">años diseñando<br />y fabricando en Valencia</span></div>
+        <div class="reveal">
+          <p class="eyebrow">Accesorios</p>
+          <ul class="acc">
+            <li><span class="acc__n">01</span><span class="acc__name">Espejos</span><span class="acc__desc">Con y sin marco, a medida</span></li>
+            <li><span class="acc__n">02</span><span class="acc__name">LED</span><span class="acc__desc">Iluminación integrada</span></li>
+            <li><span class="acc__n">03</span><span class="acc__name">Lavabos</span><span class="acc__desc">Integrados o sobre encimera</span></li>
+            <li><span class="acc__n">04</span><span class="acc__name">Armarios</span><span class="acc__desc">Columnas y auxiliares</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section news" id="contacto">
+        <p class="eyebrow reveal">Newsletter</p>
+        <h2 class="section-title reveal">Ideas para tu baño,<br /><em>una vez al mes.</em></h2>
+        <form class="news__form reveal" novalidate>
+          <div class="field"><input type="email" id="email" name="email" placeholder=" " autocomplete="email" required /><label for="email">Tu correo electrónico</label><button type="submit" class="news__submit">Suscribirme →</button></div>
+          <label class="check"><input type="checkbox" name="privacy" required /> <span>He leído y acepto la <a href="#">política de privacidad</a>.</span></label>
+          <p class="news__msg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__big">ROYO <em>50 años</em></p>
+      <div class="footer__cols">
+        <div><p class="footer__h">Royo</p><a href="#">Somos Royo</a><a href="#">Colecciones</a><a href="#configuradores">Configuradores</a><a href="contacto.html">Contacto</a></div>
+        <div><p class="footer__h">Síguenos</p><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div><p class="footer__h">Legal</p><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom"><span>Royo 50 años · Concepto de rediseño, no es la web oficial</span><span>Concept by Alejandro Romero</span></div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <script type="module" src="site.js"></script>
+</body>
+</html>
