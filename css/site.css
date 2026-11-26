@@ -94,7 +94,12 @@ em { font-style: italic; }
 .card__cap { left: 0; right: 0; bottom: 5vh; text-align: center; }
 .card__cap .serif { font-size: clamp(1.5rem, 2.4vw, 2.4rem); margin-top: .5rem; }
 .strip { position: fixed; z-index: 3; top: 50%; display: flex; gap: 14px; pointer-events: none; transform: translateY(-50%); }
-.strip img { width: clamp(90px, 8.5vw, 140px); aspect-ratio: 4/5; object-fit: cover; opacity: 0; translate: 0 30px; }
+.strip .thumb { display: block; padding: 0; border: 0; background: none; cursor: pointer; opacity: 0; translate: 0 30px; position: relative; }
+.strip .thumb img { display: block; width: clamp(90px, 8.5vw, 140px); aspect-ratio: 4/5; object-fit: cover; transition: transform .6s var(--ease); }
+.strip .thumb:hover img { transform: scale(1.06); }
+.strip .thumb::after { content: ""; position: absolute; inset: -5px; border: 1px solid var(--fg); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.strip .thumb.on::after, .strip .thumb:focus-visible::after { opacity: .6; }
+.strip.live { pointer-events: auto; }
 .sweep { left: 0; top: 50%; transform: translateY(-50%); white-space: nowrap; z-index: 6; }
 .sweep .serif { font-size: clamp(5rem, 15vw, 17rem); color: var(--fg); }
 .expand-title { left: var(--pad); bottom: 9vh; color: #F5F2EE; z-index: 6; }
