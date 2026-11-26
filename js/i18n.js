@@ -69,6 +69,17 @@
     'Tu baño, montado': 'Your bathroom, assembled', 'La columna y las estructuras se cuelgan en la pared.': 'The tall unit and the frames hang on the wall.',
     'Guías de extracción total y cierre amortiguado.': 'Full-extension, soft-close runners.', 'La encimera con doble lavabo se apoya encima.': 'The countertop with double basin rests on top.',
     'Espejos con LED y tu baño, listo. Garantía Royo.': 'LED mirrors and your bathroom is ready. Royo warranty.',
+    'Ver colecciones': 'See collections', 'Saltar intro': 'Skip intro', 'Líneas': 'Lines', 'Para ti': 'For you', 'Todo lo que': 'Everything', 'necesitas.': 'you need.',
+    'Proyectos que se entregan a tiempo.': 'Projects delivered on time.', 'Configuradores': 'Configurators', 'Diséñalo tú. Nosotros lo fabricamos.': 'You design it. We make it.',
+    'Elige módulos, medidas y acabados, o crea tu baño a medida centímetro a centímetro.': 'Choose modules, sizes and finishes, or create your made-to-measure bathroom centimetre by centimetre.',
+    'Royo Modular': 'Royo Modular', 'Tuyo a medida': 'Tuyo made to measure', 'Completa tu baño.': 'Complete your bathroom.', 'años': 'years',
+    'diseñando y fabricando en Valencia': 'designing and manufacturing in Valencia', 'Newsletter · ideas para tu baño, una vez al mes': 'Newsletter · ideas for your bathroom, once a month',
+    'Logika en Nogal Ártico': 'Logika in Nogal Ártico', 'Logika en roble': 'Logika in oak', 'Alfa en Arena': 'Alfa in Arena', 'Econic en Terracota': 'Econic in Terracota',
+    'Econic en Verde Forest': 'Econic in Verde Forest', 'Econic en Azul Vapor': 'Econic in Azul Vapor', 'Alfa en Azul Ocean': 'Alfa in Azul Ocean',
+    'Baño a medida en roble': 'Made-to-measure bathroom in oak', 'Composición en gris': 'Composition in grey', 'Detalle de lavabo': 'Basin detail',
+    'Mapa de distribuidores Royo': 'Map of Royo distributors', 'Ver las oficinas centrales en Valencia': 'See the head office in Valencia',
+    'En la web real, aquí aparecerían los distribuidores Royo de tu zona. Mientras tanto, llama al': 'On the real website, the Royo distributors in your area would appear here. In the meantime, call',
+    'Royo · Oficinas centrales': 'Royo · Head office',
     // configuradores
     'Diséñalo tú.': 'You design it.', 'Nosotros lo fabricamos.': 'We make it.', 'Diseña tu baño con': 'Design your bathroom with',
     'Logika, Econic, Wave, Vida, Alfa y Essence. Elige módulos, medidas y acabados.': 'Logika, Econic, Wave, Vida, Alfa and Essence. Choose modules, sizes and finishes.',
@@ -170,7 +181,7 @@
     for (const [re, out] of RULES) if (re.test(k)) return k.replace(re, out);
     return null;
   }
-  const ATTRS = ['alt', 'aria-label', 'title', 'data-cap', 'data-col'];
+  const ATTRS = ['alt', 'aria-label', 'title', 'data-cap', 'data-col', 'placeholder'];
   const trAttrs = (el) => ATTRS.forEach((a) => { if (el.hasAttribute(a)) { const t = tr(el.getAttribute(a)); if (t) el.setAttribute(a, t); } });
   function translateText(node) {
     const v = node.nodeValue, t = tr(v);
