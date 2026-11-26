@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141414'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23F5F2EE' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
-  <link rel="preload" as="image" href="assets/hero.jpg" />
-  <link rel="stylesheet" href="styles-v1.css" />
+  <link rel="preload" as="image" href="img/hero.jpg" />
+  <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -44,7 +44,7 @@
     <!-- 2. HERO -->
     <section class="hero" aria-label="Portada">
       <div class="hero__media">
-        <img src="assets/hero.jpg" alt="Baño luminoso con mueble suspendido de madera" class="hero__img" fetchpriority="high" />
+        <img src="img/hero.jpg" alt="Baño luminoso con mueble suspendido de madera" class="hero__img" fetchpriority="high" />
       </div>
       <div class="hero__overlay"></div>
       <div class="hero__content">
@@ -73,7 +73,7 @@
       <div class="collections__pin">
         <div class="collections__track">
           <article class="panel" data-cursor="Ver">
-            <div class="panel__media"><img src="assets/compact.jpg" alt="Mueble de baño compacto en un baño pequeño" loading="lazy" /></div>
+            <div class="panel__media"><img src="img/compact.jpg" alt="Mueble de baño compacto en un baño pequeño" loading="lazy" /></div>
             <span class="panel__num" aria-hidden="true">01</span>
             <div class="panel__body">
               <p class="eyebrow eyebrow--light">Colección</p>
@@ -86,7 +86,7 @@
             </div>
           </article>
           <article class="panel" data-cursor="Ver">
-            <div class="panel__media"><img src="assets/modular.jpg" alt="Composición modular de muebles de baño" loading="lazy" /></div>
+            <div class="panel__media"><img src="img/modular.jpg" alt="Composición modular de muebles de baño" loading="lazy" /></div>
             <span class="panel__num" aria-hidden="true">02</span>
             <div class="panel__body">
               <p class="eyebrow eyebrow--light">Colección</p>
@@ -99,7 +99,7 @@
             </div>
           </article>
           <article class="panel" data-cursor="Ver">
-            <div class="panel__media"><img src="assets/tuyo.jpg" alt="Baño a medida con acabados en madera" loading="lazy" /></div>
+            <div class="panel__media"><img src="img/tuyo.jpg" alt="Baño a medida con acabados en madera" loading="lazy" /></div>
             <span class="panel__num" aria-hidden="true">03</span>
             <div class="panel__body">
               <p class="eyebrow eyebrow--light">Colección</p>
@@ -117,11 +117,11 @@
 
     <!-- 5. PARALLAX 3 CAPAS -->
     <section class="depth" id="calidad" aria-label="Calidad">
-      <div class="depth__bg" data-speed="0.3"><img src="assets/ambiente.jpg" alt="" loading="lazy" /></div>
+      <div class="depth__bg" data-speed="0.3"><img src="img/ambiente.jpg" alt="" loading="lazy" /></div>
       <div class="depth__shade"></div>
       <div class="depth__object" data-speed="1">
-        <img src="assets/mueble.png" alt="Mueble de baño" loading="lazy" class="depth__png" />
-        <div class="depth__mask"><img src="assets/detalle1.jpg" alt="Detalle de acabado de un mueble de baño" loading="lazy" /></div>
+        <img src="img/mueble.png" alt="Mueble de baño" loading="lazy" class="depth__png" />
+        <div class="depth__mask"><img src="img/detalle1.jpg" alt="Detalle de acabado de un mueble de baño" loading="lazy" /></div>
       </div>
       <h2 class="depth__text" data-speed="1.5">Calidad que se nota<br /><em>en cada detalle</em></h2>
     </section>
@@ -133,8 +133,8 @@
           <div class="film__bars" aria-hidden="true"><span></span><span></span></div>
           <div class="film__light" aria-hidden="true"></div>
 
-          <!-- Si existe assets/mueble.mp4 se usa este vídeo, avanzado con el scroll -->
-          <video class="film__video" src="assets/mueble.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+          <!-- Si existe img/mueble.mp4 se usa este vídeo, avanzado con el scroll -->
+          <video class="film__video" src="img/mueble.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
 
           <div class="film__stage" aria-hidden="true">
             <div class="film__camera">
@@ -175,7 +175,7 @@
       </div>
       <div class="config__grid">
         <article class="config__item">
-          <div class="config__media" data-reveal><img src="assets/detalle2.jpg" alt="Detalle de lavabo y mueble modular" loading="lazy" /></div>
+          <div class="config__media" data-reveal><img src="img/detalle2.jpg" alt="Detalle de lavabo y mueble modular" loading="lazy" /></div>
           <div class="config__text">
             <span class="config__idx">A</span>
             <h3>Diseña tu baño con <em>Royo Modular</em></h3>
@@ -184,7 +184,7 @@
           </div>
         </article>
         <article class="config__item config__item--offset">
-          <div class="config__media" data-reveal><img src="assets/tuyo.jpg" alt="Baño a medida Tuyo" loading="lazy" /></div>
+          <div class="config__media" data-reveal><img src="img/tuyo.jpg" alt="Baño a medida Tuyo" loading="lazy" /></div>
           <div class="config__text">
             <span class="config__idx">B</span>
             <h3>Tu baño a medida con <em>Tuyo</em></h3>
@@ -260,6 +260,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="main-v1.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

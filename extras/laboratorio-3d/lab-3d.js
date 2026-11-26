@@ -61,12 +61,12 @@ manager.onProgress = (_u, done, total) => {
   loadpct.textContent = `Cargando modelo · ${Math.round(p * 100)}%`;
 };
 
-const woodTex = new THREE.TextureLoader(manager).load('assets/3d/tex/nogal_artico.jpg');
+const woodTex = new THREE.TextureLoader(manager).load('../../assets/3d/tex/nogal_artico.jpg');
 woodTex.colorSpace = THREE.SRGBColorSpace;
 woodTex.wrapS = woodTex.wrapT = THREE.MirroredRepeatWrapping;
 woodTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-const hickoryTex = new THREE.TextureLoader(manager).load('assets/3d/tex/hickory_nature.jpg');
+const hickoryTex = new THREE.TextureLoader(manager).load('../../assets/3d/tex/hickory_nature.jpg');
 hickoryTex.colorSpace = THREE.SRGBColorSpace;
 hickoryTex.wrapS = hickoryTex.wrapT = THREE.MirroredRepeatWrapping;
 hickoryTex.anisotropy = woodTex.anisotropy;
@@ -203,7 +203,7 @@ function finishSetup() {
 
 /* LOGIKA · modelo real del configurador de Royo */
 function loadLogika() {
-  new GLTFLoader(manager).load('assets/3d/LOGIKA_2C_100.glb', (gltf) => {
+  new GLTFLoader(manager).load('../../assets/3d/LOGIKA_2C_100.glb', (gltf) => {
     const model = gltf.scene;
     const box = new THREE.Box3().setFromObject(model);
     const c = box.getCenter(new THREE.Vector3());

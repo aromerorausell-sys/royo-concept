@@ -24,6 +24,35 @@ Rediseño conceptual de la web de **Royo**, fabricante valenciano de muebles de 
 
 **Tecnología**: HTML, CSS y JavaScript sin frameworks · Three.js · Lenis (scroll suave).
 
+## Estructura del proyecto
+```
+royo-concept/
+├── index.html          Portada (historia 3D con scroll)
+├── coleccion.html      Ficha de colección (?c=logika | econic | alfa)
+├── contacto.html       Contacto y buscador de distribuidores
+├── css/
+│   └── site.css        Estilos de toda la web
+├── js/
+│   ├── site.js         Motor de la portada (Three.js, scroll, animaciones)
+│   ├── coleccion.js    Fichas de colección y visor 3D
+│   ├── royo-models.js  Muebles 3D compartidos (Logika y Econic)
+│   └── i18n.js         Idiomas ES / EN
+├── assets/
+│   ├── 3d/             Modelos .glb y texturas de madera
+│   ├── royo/           Fotos de producto y galerías
+│   ├── docs/           Fichas técnicas y esquemas de montaje (PDF)
+│   └── video/          Fotogramas (y vídeo) del montaje
+├── referencias/        Análisis de referencias, guía 3D y guía del vídeo
+└── extras/
+    ├── laboratorio-3d/ Laboratorio 3D independiente (Logika / Econic)
+    └── version-1/      Primera versión de la web (archivo)
+```
+Las páginas principales están en la raíz porque GitHub Pages publica desde `main` y la carpeta `/`.
+
+**Extras publicados:**
+- Laboratorio 3D: https://aromerorausell-sys.github.io/royo-concept/extras/laboratorio-3d/
+- Versión 1: https://aromerorausell-sys.github.io/royo-concept/extras/version-1/
+
 ## Verla en local
 ```bash
 git clone https://github.com/aromerorausell-sys/royo-concept.git
