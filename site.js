@@ -268,9 +268,9 @@ const macro = document.getElementById('macro'), macroImg = macro.querySelector('
 const fillword = document.querySelector('#fillword .serif');
 const finishName = document.getElementById('finishName'), dots = document.getElementById('finishDots');
 ECONIC.forEach((f, i) => { const b = document.createElement('button'); b.type = 'button'; b.style.background = f.sw; b.setAttribute('aria-label', f.name); b.dataset.i = i; dots.appendChild(b); });
-// clic en un color: se queda puesto hasta que el scroll pase al siguiente acabado
-let manualIdx = -1, manualAt = -1;
-dots.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; manualIdx = +b.dataset.i; manualAt = -2; });
+// clic en un color: se queda puesto mientras sigas en esta sección
+let manualIdx = -1;
+dots.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; manualIdx = +b.dataset.i; });
 const railEl = document.getElementById('rail');
 const story = document.getElementById('story');
 
@@ -382,8 +382,6 @@ function frame(time) {
   let tint = null;
   if (p > 0.83 && p < 0.92) {
     const sf = Math.min(ECONIC.length - 1, Math.floor(range(p, 0.835, 0.91) * ECONIC.length));
-    if (manualAt === -2) manualAt = sf;
-    if (manualIdx >= 0 && sf !== manualAt) manualIdx = -1;
     const fi = manualIdx >= 0 ? manualIdx : sf;
     if (fi !== finishIdx) {
       finishIdx = fi; const f = ECONIC[fi];
