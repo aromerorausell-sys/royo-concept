@@ -15,7 +15,7 @@
     'Contacto': 'Contact', 'Profesionales': 'Professionals', 'Área privada': 'Private area', 'Dónde comprar': 'Where to buy',
     'Royo, inicio': 'Royo, home', 'Principal': 'Main', 'Inicio': 'Home',
     // portada
-    'Diseñamos': 'We design', 'tu baño': 'your bathroom', 'Muebles de baño': 'Bathroom furniture', '+50 años': '50+ years',
+    'Diseñamos': 'We design', 'Royo · Diseñamos tu baño': 'Royo · We design your bathroom', 'tu baño': 'your bathroom', 'Muebles de baño': 'Bathroom furniture', '+50 años': '50+ years',
     'Diseño y fabricación': 'Design and manufacturing',
     'Diseñamos y fabricamos muebles de baño en Valencia desde hace más de 50 años. Para quien reforma su casa y para quien construye proyectos.':
       'We have been designing and manufacturing bathroom furniture in Valencia for over 50 years. For people renovating their home and for those building projects.',

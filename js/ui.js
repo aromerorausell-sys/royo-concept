@@ -28,18 +28,4 @@
       setTimeout(() => { big.onload = () => big.classList.remove('swap'); big.src = b.dataset.src; big.alt = b.getAttribute('aria-label'); }, 180);
     }));
   });
-  // logo grande en la portada: empieza ampliado y se reduce al tamaño normal al hacer scroll
-  const logo = document.querySelector('.header .logo');
-  if (logo && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    let ticking = false;
-    const fit = () => {
-      ticking = false;
-      const big = innerWidth < 500 ? 1.35 : innerWidth < 1000 ? 1.8 : 2.6;
-      const t = Math.min(1, scrollY / (innerHeight * 0.35));
-      const e = 1 - Math.pow(1 - t, 3);
-      logo.style.setProperty('--logo-s', (big + (1 - big) * e).toFixed(3));
-    };
-    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(fit); } }, { passive: true });
-    addEventListener('resize', fit); fit();
-  }
 })();
