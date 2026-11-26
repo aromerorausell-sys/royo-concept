@@ -53,6 +53,8 @@ em { font-style: italic; }
 
 .hero-title { left: 0; right: 0; top: 11vh; text-align: center; }
 .hero-title h1 { font-size: clamp(3.4rem, 10.5vw, 12.5rem); line-height: .84; }
+.hero-title .hero-logo { font-family: "Marcellus", var(--serif); font-weight: 400; font-size: clamp(7rem, 33vw, 34rem); line-height: .9; letter-spacing: -.02em; color: #141414; }
+.hero-logo sup { font-family: Inter, system-ui, sans-serif; font-size: .1em; vertical-align: top; position: relative; top: .55em; margin-left: .04em; letter-spacing: 0; }
 .hero-title h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
 .hero-title h1 .line > span { display: inline-block; transform: translateY(105%); transition: transform 1.6s var(--ease); }
 .hero-title h1 .line:nth-child(2) > span { transition-delay: .12s; }
@@ -64,6 +66,7 @@ em { font-style: italic; }
 .hero-meta .scroll b::after { content: ""; position: absolute; inset: 0; background: var(--bg); animation: cue 2s var(--ease) infinite; }
 @keyframes cue { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
 .hero-coords { left: var(--pad); top: 6.5rem; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; line-height: 1.8; color: var(--sand-deep); text-transform: uppercase; }
+.hero-coords { display: none; }
 .hero-coords.right { left: auto; right: var(--pad); text-align: right; }
 
 .mani { left: var(--pad); top: 50%; transform: translateY(-50%); width: min(46vw, 760px); }
