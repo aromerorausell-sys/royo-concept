@@ -258,23 +258,6 @@ function scramble(node) {
 const FADE = 0.02;
 const textOpacity = (p, a, b) => sm(Math.min(clamp((p - a) / FADE, 0, 1), clamp((b - p) / FADE, 0, 1)));
 
-const card = document.getElementById('card'), cardImgs = [...document.querySelectorAll('#cardImgs img')];
-cardImgs.forEach((im) => (im.style.transition = 'opacity .8s cubic-bezier(.215,.61,.355,1), transform 1.6s cubic-bezier(.215,.61,.355,1)'));
-const stripL = document.getElementById('stripL'), stripR = document.getElementById('stripR');
-// miniaturas a los lados: se pueden pulsar para ver esa foto en grande (sin salir de la página)
-let galPick = -1;
-const thumbs = cardImgs.map((im, i) => {
-  const t = document.createElement('button'); t.type = 'button'; t.className = 'thumb'; t.dataset.i = i;
-  t.setAttribute('aria-label', im.dataset.cap || 'Ver foto');
-  t.innerHTML = `<img src="${im.getAttribute('src')}" alt="" />`;
-  t.style.transition = `opacity .8s ${i * 0.06}s, translate .8s cubic-bezier(.215,.61,.355,1) ${i * 0.06}s`;
-  t.addEventListener('click', () => { galPick = i; });
-  (i % 2 ? stripR : stripL).appendChild(t); return t;
-});
-const capCol = document.getElementById('capCol'), capName = document.getElementById('capName');
-const sweep = document.querySelector('#sweep .serif');
-const macro = document.getElementById('macro'), macroImg = macro.querySelector('img'), macroShade = macro.querySelector('i');
-const fillword = document.querySelector('#fillword .serif');
 const finishName = document.getElementById('finishName'), dots = document.getElementById('finishDots');
 ECONIC.forEach((f, i) => { const b = document.createElement('button'); b.type = 'button'; b.style.background = f.sw; b.setAttribute('aria-label', f.name); b.dataset.i = i; dots.appendChild(b); });
 // clic en un color: se queda puesto mientras sigas en esta sección
@@ -284,6 +267,15 @@ const railEl = document.getElementById('rail');
 const story = document.getElementById('story');
 
 /* ================= SCROLL ================= */
+// La historia se acorta sin perder fluidez: cada tramo de la línea de tiempo original (p) recibe un peso.
+// Los tramos sin texto (transiciones) pesan poco y se recorren rápido; portada, despiece y Econic pesan más.
+const SEG = [[0, 0.085, 1], [0.085, 0.19, 0.3], [0.19, 0.365, 1.7], [0.365, 0.43, 0.3], [0.43, 0.70, 0.45], [0.70, 0.95, 2], [0.95, 1, 0.25]];
+const SEG_T = SEG.reduce((a, g) => a + g[2], 0);
+function remap(q) {
+  let acc = 0;
+  for (const [a, b, w] of SEG) { const len = w / SEG_T; if (q <= acc + len) return a + (b - a) * ((q - acc) / len); acc += len; }
+  return 1;
+}
 let lenis = null;
 if (!reduced && window.Lenis) lenis = new Lenis({ duration: 1.4, smoothWheel: true, easing: (t) => 1 - Math.pow(1 - t, 3) });
 const storyMax = () => story.offsetHeight - innerHeight;
@@ -333,8 +325,9 @@ function frame(time) {
   if (lenis) lenis.raf(time);
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
   const y = scrollY_(), max = storyMax();
-  const target = max > 0 ? clamp(y / max, 0, 1) : 0;
+  const target = remap(max > 0 ? clamp(y / max, 0, 1) : 0);
   pSmooth = reduced ? target : pSmooth + (target - pSmooth) * (1 - Math.exp(-dt * 3.2));
+  if (y > max + innerHeight * 0.3) pSmooth = 1; // si has saltado más allá de la historia (botones, menú), sin pasar por el modo oscuro
   const p = pSmooth, s = sample(p);
   railEl.style.transform = `scaleY(${clamp(y / (document.documentElement.scrollHeight - innerHeight), 0, 1)})`;
 
@@ -426,39 +419,6 @@ function frame(time) {
     if (lo > 0.4 && !Lb.on) { Lb.on = true; Lb.el.querySelectorAll('[data-scramble]').forEach(scramble); }
     if (lo < 0.05) Lb.on = false;
   });
-
-  // tarjeta con galería → se abre a pantalla completa
-  const cIn = range(p, 0.445, 0.465), cOut = 1 - range(p, 0.64, 0.655), ex = sm(range(p, 0.555, 0.59));
-  const cw = Math.min(innerWidth * (portrait ? 0.62 : 0.28), 430), ch = cw * 1.25;
-  const W0 = lerp(cw, innerWidth, ex), H0 = lerp(ch, innerHeight, ex);
-  card.style.width = W0 + 'px'; card.style.height = H0 + 'px';
-  card.style.transform = `translate(${(innerWidth - W0) / 2}px, ${(innerHeight - H0) / 2}px)`;
-  card.style.opacity = Math.min(cIn, cOut);
-  card.querySelector('.card__frame').style.opacity = 1 - ex;
-  if (p < 0.465 || p > 0.6) galPick = -1; // al salir de la galería vuelve a mandar el scroll
-  const giScroll = p < 0.475 ? -1 : Math.min(cardImgs.length - 1, Math.floor(range(p, 0.475, 0.55) * cardImgs.length));
-  const gi = galPick >= 0 ? galPick : giScroll;
-  const expandIdx = galPick >= 0 ? galPick : cardImgs.length - 1; // la foto elegida es la que se abre a pantalla completa
-  cardImgs.forEach((im, i) => { const on = ex > 0 ? i === expandIdx : i === gi; im.style.opacity = on ? 1 : 0; im.style.transform = on ? 'scale(1)' : 'scale(1.08)'; });
-  if (gi >= 0 && capName.dataset.i !== String(gi)) { capName.dataset.i = gi; capName.textContent = cardImgs[gi].dataset.cap; capCol.textContent = cardImgs[gi].dataset.col; }
-  const stripsOn = range(p, 0.47, 0.48) * (1 - range(p, 0.55, 0.56));
-  stripL.style.opacity = stripR.style.opacity = stripsOn;
-  stripL.style.right = `calc(50% + ${cw / 2 + 28}px)`; stripR.style.left = `calc(50% + ${cw / 2 + 28}px)`;
-  stripL.style.flexDirection = 'row-reverse';
-  const stripsLive = stripsOn > 0.5;
-  stripL.classList.toggle('live', stripsLive); stripR.classList.toggle('live', stripsLive);
-  thumbs.forEach((th, i) => { const vis = stripsOn > 0; th.style.opacity = vis ? (i === gi ? 0.35 : 1) : 0; th.style.translate = vis ? '0 0' : '0 30px'; th.classList.toggle('on', i === gi); });
-  const sw = range(p, 0.44, 0.53);
-  sweep.style.display = 'inline-block';
-  sweep.style.transform = `translateX(${lerp(innerWidth, -sweep.offsetWidth, sw)}px)`;
-  sweep.style.filter = sw > 0 && sw < 1 && !reduced ? 'blur(1.5px)' : 'none';
-
-  // macro de material
-  const mIn = range(p, 0.615, 0.635), mOut = 1 - range(p, 0.70, 0.715);
-  macro.style.opacity = Math.min(mIn, mOut);
-  macroImg.style.transform = `scale(${lerp(1.05, 2.6, sm(range(p, 0.615, 0.70)))})`;
-  macroShade.style.opacity = lerp(0, 0.62, range(p, 0.64, 0.69));
-  fillword.style.setProperty('--fill', `${range(p, 0.645, 0.69) * 100}%`);
 
   // textos por tramo + palabras que se encienden
   texts.forEach((T) => {
