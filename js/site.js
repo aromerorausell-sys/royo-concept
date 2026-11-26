@@ -261,7 +261,16 @@ const textOpacity = (p, a, b) => sm(Math.min(clamp((p - a) / FADE, 0, 1), clamp(
 const card = document.getElementById('card'), cardImgs = [...document.querySelectorAll('#cardImgs img')];
 cardImgs.forEach((im) => (im.style.transition = 'opacity .8s cubic-bezier(.215,.61,.355,1), transform 1.6s cubic-bezier(.215,.61,.355,1)'));
 const stripL = document.getElementById('stripL'), stripR = document.getElementById('stripR');
-const thumbs = cardImgs.map((im, i) => { const t = document.createElement('img'); t.src = im.src; t.alt = ''; t.style.transition = 'opacity .8s, translate .8s cubic-bezier(.215,.61,.355,1)'; (i % 2 ? stripR : stripL).appendChild(t); return t; });
+// miniaturas a los lados: se pueden pulsar para ver esa foto en grande (sin salir de la página)
+let galPick = -1;
+const thumbs = cardImgs.map((im, i) => {
+  const t = document.createElement('button'); t.type = 'button'; t.className = 'thumb'; t.dataset.i = i;
+  t.setAttribute('aria-label', im.dataset.cap || 'Ver foto');
+  t.innerHTML = `<img src="${im.getAttribute('src')}" alt="" />`;
+  t.style.transition = `opacity .8s ${i * 0.06}s, translate .8s cubic-bezier(.215,.61,.355,1) ${i * 0.06}s`;
+  t.addEventListener('click', () => { galPick = i; });
+  (i % 2 ? stripR : stripL).appendChild(t); return t;
+});
 const capCol = document.getElementById('capCol'), capName = document.getElementById('capName');
 const sweep = document.querySelector('#sweep .serif');
 const macro = document.getElementById('macro'), macroImg = macro.querySelector('img'), macroShade = macro.querySelector('i');
@@ -426,14 +435,19 @@ function frame(time) {
   card.style.transform = `translate(${(innerWidth - W0) / 2}px, ${(innerHeight - H0) / 2}px)`;
   card.style.opacity = Math.min(cIn, cOut);
   card.querySelector('.card__frame').style.opacity = 1 - ex;
-  const gi = p < 0.475 ? -1 : Math.min(cardImgs.length - 1, Math.floor(range(p, 0.475, 0.55) * cardImgs.length));
-  cardImgs.forEach((im, i) => { const on = i === gi || (ex > 0 && i === cardImgs.length - 1); im.style.opacity = on ? 1 : 0; im.style.transform = on ? 'scale(1)' : 'scale(1.08)'; });
+  if (p < 0.465 || p > 0.6) galPick = -1; // al salir de la galería vuelve a mandar el scroll
+  const giScroll = p < 0.475 ? -1 : Math.min(cardImgs.length - 1, Math.floor(range(p, 0.475, 0.55) * cardImgs.length));
+  const gi = galPick >= 0 ? galPick : giScroll;
+  const expandIdx = galPick >= 0 ? galPick : cardImgs.length - 1; // la foto elegida es la que se abre a pantalla completa
+  cardImgs.forEach((im, i) => { const on = ex > 0 ? i === expandIdx : i === gi; im.style.opacity = on ? 1 : 0; im.style.transform = on ? 'scale(1)' : 'scale(1.08)'; });
   if (gi >= 0 && capName.dataset.i !== String(gi)) { capName.dataset.i = gi; capName.textContent = cardImgs[gi].dataset.cap; capCol.textContent = cardImgs[gi].dataset.col; }
   const stripsOn = range(p, 0.47, 0.48) * (1 - range(p, 0.55, 0.56));
   stripL.style.opacity = stripR.style.opacity = stripsOn;
   stripL.style.right = `calc(50% + ${cw / 2 + 28}px)`; stripR.style.left = `calc(50% + ${cw / 2 + 28}px)`;
   stripL.style.flexDirection = 'row-reverse';
-  thumbs.forEach((th, i) => { const on = i < gi; th.style.opacity = on ? 1 : 0; th.style.translate = on ? '0 0' : '0 30px'; });
+  const stripsLive = stripsOn > 0.5;
+  stripL.classList.toggle('live', stripsLive); stripR.classList.toggle('live', stripsLive);
+  thumbs.forEach((th, i) => { const vis = stripsOn > 0; th.style.opacity = vis ? (i === gi ? 0.35 : 1) : 0; th.style.translate = vis ? '0 0' : '0 30px'; th.classList.toggle('on', i === gi); });
   const sw = range(p, 0.44, 0.53);
   sweep.style.display = 'inline-block';
   sweep.style.transform = `translateX(${lerp(innerWidth, -sweep.offsetWidth, sw)}px)`;
@@ -462,37 +476,6 @@ function frame(time) {
 requestAnimationFrame(frame);
 
 /* ================= SECCIONES DE FLUJO ================= */
-/* Instalación: el montaje avanza y retrocede con el scroll.
-   Con assets/video/montaje.mp4 mueve el vídeo fotograma a fotograma; sin vídeo, funde las dos imágenes. */
-const asm = document.getElementById('instalacion');
-if (asm) {
-  const vid = asm.querySelector('.a-video'), imS = asm.querySelector('.a-start'), imE = asm.querySelector('.a-end');
-  const steps = [...asm.querySelectorAll('.steps li')], bar = asm.querySelector('.assembly__bar span');
-  let hasVideo = false, vt = 0;
-  fetch('assets/video/montaje.mp4', { method: 'HEAD' }).then((r) => {
-    if (!r.ok) return;
-    vid.addEventListener('loadeddata', () => { hasVideo = true; asm.classList.add('has-video'); }, { once: true });
-    vid.src = 'assets/video/montaje.mp4'; vid.load();
-  }).catch(() => {});
-  (function loop() {
-    requestAnimationFrame(loop);
-    const r = asm.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
-    const k = clamp(-r.top / (r.height - innerHeight), 0, 1), a = clamp((k - 0.06) / 0.82, 0, 1);
-    if (hasVideo && vid.duration) {
-      vt += (a * (vid.duration - 0.05) - vt) * (reduced ? 1 : 0.2);
-      if (!vid.seeking && Math.abs(vid.currentTime - vt) > 0.008) vid.currentTime = vt;
-    } else {
-      const f = sm(clamp((a - 0.35) / 0.4, 0, 1));
-      imS.style.opacity = 1 - f; imE.style.opacity = f;
-      imS.style.transform = `scale(${1 + 0.04 * (1 - a)})`; imE.style.transform = `scale(${1.02 - 0.02 * f})`;
-    }
-    const si = Math.min(steps.length - 1, Math.floor(a * steps.length * 0.999));
-    steps.forEach((el, i) => { el.classList.toggle('on', i <= si); el.classList.toggle('now', i === si); });
-    bar.style.transform = `scaleX(${a})`;
-  })();
-}
-
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
 document.querySelectorAll('.reveal, .clip').forEach((el) => io.observe(el));
 const count = document.getElementById('count');

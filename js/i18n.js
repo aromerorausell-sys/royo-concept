@@ -59,6 +59,16 @@
     'Instala': 'Install', 'Vídeos paso a paso y guías regulables en altura y en lateral.': 'Step-by-step videos and runners adjustable in height and sideways.',
     'Disfruta': 'Enjoy', 'Garantía Royo y servicio técnico desde Valencia.': 'Royo warranty and technical service from Valencia.',
     'Piezas del mueble Logika antes de montarlo': 'Logika unit parts before assembly', 'Mueble Logika montado': 'Assembled Logika unit',
+    'Laterales': 'Side panels', 'Listo': 'Done', 'Los laterales de 16 mm se unen a la estructura.': 'The 16 mm side panels join the frame.',
+    'Guías Hettich de extracción total y cierre amortiguado.': 'Hettich full-extension, soft-close runners.',
+    'La encimera con lavabo integrado se apoya arriba.': 'The countertop with integrated basin rests on top.',
+    'Suspendido en la pared. Garantía Royo y servicio técnico desde Valencia.': 'Wall-hung. Royo warranty and technical service from Valencia.',
+    'Guías Hettich · extracción total': 'Hettich runners · full extension', 'Montaje del mueble Logika en 3D': '3D assembly of the Logika unit',
+    'Estructura': 'Structure', 'Luz': 'Light', 'Columna': 'Tall unit', 'Suspendida · dos puertas': 'Wall-hung · two doors', 'Se cuelga en la pared': 'Hangs on the wall',
+    'Extracción total · cierre amortiguado': 'Full extension · soft-close', 'Doble lavabo integrado': 'Integrated double basin', 'Espejos': 'Mirrors', 'Retroiluminación LED': 'LED backlighting',
+    'Tu baño, montado': 'Your bathroom, assembled', 'La columna y las estructuras se cuelgan en la pared.': 'The tall unit and the frames hang on the wall.',
+    'Guías de extracción total y cierre amortiguado.': 'Full-extension, soft-close runners.', 'La encimera con doble lavabo se apoya encima.': 'The countertop with double basin rests on top.',
+    'Espejos con LED y tu baño, listo. Garantía Royo.': 'LED mirrors and your bathroom is ready. Royo warranty.',
     // configuradores
     'Diséñalo tú.': 'You design it.', 'Nosotros lo fabricamos.': 'We make it.', 'Diseña tu baño con': 'Design your bathroom with',
     'Logika, Econic, Wave, Vida, Alfa y Essence. Elige módulos, medidas y acabados.': 'Logika, Econic, Wave, Vida, Alfa and Essence. Choose modules, sizes and finishes.',
@@ -138,7 +148,9 @@
     'y te diremos cuál te queda más cerca.': 'and we will tell you which one is nearest.',
   };
   // frases con partes variables
+  const STEP_EN = { Estructura: 'Structure', Cajones: 'Drawers', Encimera: 'Countertop', Luz: 'Light' };
   const RULES = [
+    [/^Paso (\d+) \/ (\d+) · (Estructura|Cajones|Encimera|Luz)$/, (_, a, b, c) => `Step ${a} / ${b} · ${STEP_EN[c]}`],
     [/^Gracias, (.+)\. Te responderemos pronto \(demo: no se envía nada\)\.$/, 'Thank you, $1. We will reply soon (demo: nothing is sent).'],
     [/^Mueble (.+) de Royo en un baño$/, 'Royo $1 unit in a bathroom'],
     [/^(.+), foto (\d+)$/, '$1, photo $2'],
