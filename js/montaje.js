@@ -17,7 +17,8 @@ function init() {
   const hud = $('#salaStep'), bar = $('.assembly__bar span');
   const steps = [...sec.querySelectorAll('.steps li')];
 
-  /* Coordenadas en el fotograma original (1280 × 720) y fotogramas (0–89) de cada fase */
+  /* Coordenadas en el fotograma original (1280 × 720) y fases en una escala de referencia 0–89
+     (independiente del número real de fotogramas de frames.json). */
   const OUTLINES = [
     { r: [293, 132, 398, 565], draw: [0, 6], fill: [8, 22] },   // columna
     { r: [462, 412, 952, 583], draw: [2, 8], fill: [14, 46] },  // mueble doble
@@ -28,7 +29,7 @@ function init() {
     { f: [8, 28], at: [398, 170], side: 1, b: 'Columna', s: 'Suspendida · dos puertas' },
     { f: [16, 32], at: [707, 583], side: -1, b: 'Estructura', s: 'Se cuelga en la pared' },
     { f: [32, 50], at: [946, 500], side: 1, b: 'Cajones', s: 'Extracción total · cierre amortiguado' },
-    { f: [50, 66], at: [462, 414], side: -1, b: 'Encimera', s: 'Doble lavabo integrado' },
+    { f: [50, 66], at: [952, 414], side: 1, b: 'Encimera', s: 'Doble lavabo integrado' },
     { f: [60, 78], at: [897, 120], side: 1, b: 'Espejos', s: 'Retroiluminación LED' },
     { f: [80, 92], at: [952, 560], side: 1, b: 'Listo', s: 'Tu baño, montado' },
   ];
@@ -80,18 +81,25 @@ function init() {
       ox = clamp(W * 0.5 - 0.56 * dw, W - dw, 0); oy = H * 0.08;
     } else {
       // escritorio: se amplía y se desplaza a la derecha para dejar sitio al texto
-      s = Math.max(W / SW, H / SH, (W * 1.12) / SW); const dw = SW * s, dh = SH * s;
-      ox = clamp(W * 0.6 - 0.5 * dw, W - dw, 0); oy = clamp((H - dh) * 0.15, H - dh, 0);
+      // escritorio: sin ampliar más de lo necesario (el vídeo es de 1280 × 720)
+      s = Math.max(W / SW, H / SH); const dw = SW * s, dh = SH * s;
+      ox = clamp(W * 0.56 - 0.5 * dw, W - dw, 0); oy = clamp((H - dh) * 0.2, H - dh, 0);
     }
     T = { s, ox, oy }; lastFrame = -1;
   }
   new ResizeObserver(layout).observe(stage); layout();
   const P = (x, y) => [T.ox + x * T.s, T.oy + y * T.s];
 
-  function drawBg(i) {
-    const im = frames[i] || nearest(i); if (!im) return;
-    bx.fillStyle = '#F5F2EE'; bx.fillRect(0, 0, bg.width, bg.height);
-    bx.drawImage(im, T.ox * dpr, T.oy * dpr, SW * T.s * dpr, SH * T.s * dpr);
+  // mezcla el fotograma actual con el siguiente según la parte decimal: movimiento continuo, sin saltos
+  bx.imageSmoothingEnabled = true; bx.imageSmoothingQuality = 'high';
+  function drawBg(f) {
+    const i = Math.floor(f), k = f - i;
+    const A = frames[i] || nearest(i); if (!A) return;
+    const B = k > 0.02 && frames[i + 1];
+    const x = T.ox * dpr, y = T.oy * dpr, w = SW * T.s * dpr, h = SH * T.s * dpr;
+    bx.globalAlpha = 1; bx.fillStyle = '#F5F2EE'; bx.fillRect(0, 0, bg.width, bg.height);
+    bx.drawImage(A, x, y, w, h);
+    if (B) { bx.globalAlpha = k; bx.drawImage(B, x, y, w, h); bx.globalAlpha = 1; }
   }
 
   /* ---------- bucle ---------- */
@@ -102,11 +110,12 @@ function init() {
     if (!vis) return;
     const r = sec.getBoundingClientRect();
     const target = reduced ? 1 : range(clamp(-r.top / (r.height - H), 0, 1), 0.03, 0.94);
-    a += (target - a) * (reduced ? 1 : 0.14);
-    const n = meta ? meta.count - 1 : 89, f = a * n;
+    a += (target - a) * (reduced ? 1 : 0.28);
+    if (Math.abs(target - a) < 0.0005) a = target;
+    const n = meta ? meta.count - 1 : 89, fr = a * n, f = a * 89; // fr: fotograma real · f: escala de referencia
 
-    const fi = Math.round(f);
-    if (meta && fi !== lastFrame) { drawBg(fi); lastFrame = fi; }
+    const key = Math.round(fr * 20);
+    if (meta && key !== lastFrame) { drawBg(fr); lastFrame = key; }
 
     // siluetas del plano: se dibujan sobre la pared vacía y se apagan cuando llega la pieza
     outs.forEach((o) => {

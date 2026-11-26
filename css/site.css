@@ -370,16 +370,16 @@ em { font-style: italic; }
 .lang button.on { opacity: 1; border-color: currentColor; }
 
 /* Instalación · el Logika se monta dentro de una sala real */
-.assembly { position: relative; height: 420vh; }
+.assembly { position: relative; height: 260vh; }
 .assembly__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #b9b1a6; }
 .assembly__bg, .assembly__over { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .assembly__over { pointer-events: none; overflow: visible; }
 /* funde la sala con la página arriba y abajo, y oscurece un poco a la izquierda para leer el texto */
 .assembly__shade { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, var(--bg) 0%, transparent 16%, transparent 84%, var(--bg) 100%),
-              linear-gradient(90deg, rgba(245,242,238,.82) 0%, rgba(245,242,238,.55) 26%, transparent 46%); }
-.assembly__text { position: absolute; z-index: 3; left: var(--pad); top: 50%; transform: translateY(-50%); width: min(26rem, 36vw); }
-.assembly .section-title { font-size: clamp(2.2rem, 4.2vw, 4.4rem); }
+              linear-gradient(90deg, rgba(245,242,238,.8) 0%, rgba(245,242,238,.5) 18%, transparent 30%); }
+.assembly__text { position: absolute; z-index: 3; left: var(--pad); top: 50%; transform: translateY(-50%); width: min(19rem, 21vw); }
+.assembly .section-title { font-size: clamp(2rem, 3.2vw, 3.4rem); }
 .steps--live { display: flex; flex-direction: column; gap: 0; margin-top: clamp(1.4rem, 3.5vh, 2.6rem); }
 .steps--live li { display: grid; grid-template-columns: 2.4rem 1fr; column-gap: .6rem; padding: .8rem 0; border-top: 1px solid rgba(20,20,20,.14); opacity: .3; transition: opacity .6s var(--ease); }
 .steps--live li.on { opacity: 1; }
